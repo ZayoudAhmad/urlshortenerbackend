@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace urlshortenerbackend.Models;
 
 public class Link
 {
+    [Key]
     public long Id { get; set; }
 
     [Required]
@@ -18,6 +20,7 @@ public class Link
 
     public long? FolderId { get; set; }
 
+    [ForeignKey("FolderId")]
     public Folder? Folder { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;

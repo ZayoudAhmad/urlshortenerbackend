@@ -53,7 +53,7 @@ namespace urlshortenerbackend.Migrations
                 name: "ClickLog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Timestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     Referrer = table.Column<string>(type: "text", nullable: true),
@@ -83,6 +83,12 @@ namespace urlshortenerbackend.Migrations
                 name: "IX_Links_FolderId",
                 table: "Links",
                 column: "FolderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Links_ShortUrl",
+                table: "Links",
+                column: "ShortUrl",
+                unique: true);
         }
 
         /// <inheritdoc />

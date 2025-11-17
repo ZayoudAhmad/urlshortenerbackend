@@ -24,11 +24,11 @@ namespace urlshortenerbackend.Migrations
 
             modelBuilder.Entity("urlshortenerbackend.Models.ClickLog", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("City")
                         .HasColumnType("text");
@@ -109,6 +109,9 @@ namespace urlshortenerbackend.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FolderId");
+
+                    b.HasIndex("ShortUrl")
+                        .IsUnique();
 
                     b.ToTable("Links");
                 });

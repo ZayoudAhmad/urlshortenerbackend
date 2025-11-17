@@ -1,12 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using urlshortenerbackend.Enums;
 
 namespace urlshortenerbackend.Models;
 
 public class ClickLog
 {
-    public int Id { get; set; }
+    [Key]
+    public long Id { get; set; }
 
     public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
 
@@ -22,5 +24,6 @@ public class ClickLog
 
     public long LinkId { get; set; }
 
+    [ForeignKey("LinkId")]
     public required Link Link { get; set; }
 }

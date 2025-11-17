@@ -4,6 +4,7 @@ namespace urlshortenerbackend.Models;
 
 public class Folder
 {
+    [Key]
     public long Id { get; set; }   
 
     [Required]
