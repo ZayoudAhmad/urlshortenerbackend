@@ -1,0 +1,44 @@
+# Visual Studio / JetBrains / Rider / VS Code
+.vs/
+.idea/
+.vscode/
+
+# Build artifacts
+bin/
+obj/
+Debug/
+Release/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Core runtime
+*.dotCover
+*.ncrunch*
+*.vspscc
+
+# EF Core Migrations snapshot files (optional: include them in repo if you want migrations versioned)
+# Migrations/**/*.Designer.cs
+# Migrations/**/*.Snapshot.cs
+
+# NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+
+# PostgreSQL local files (if any)
+*.pgsql
+
+# Secret files
+appsettings.*.json
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
