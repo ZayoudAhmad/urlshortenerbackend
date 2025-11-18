@@ -8,7 +8,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<Link> Links => Set<Link>();
     public DbSet<Folder> Folders => Set<Folder>();
-    public DbSet<ClickLog> ClickLog => Set<ClickLog>();
+    public DbSet<ClickLog> ClickLogs => Set<ClickLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

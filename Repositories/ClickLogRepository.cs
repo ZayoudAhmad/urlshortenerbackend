@@ -1,31 +1,48 @@
+using Microsoft.EntityFrameworkCore;
+using urlshortenerbackend.Data;
 using urlshortenerbackend.Models;
 
 namespace urlshortenerbackend.Repositories;
 
 public class ClickLogRepository : IClickLogRepository
 {
-    public Task<ClickLog> AddClickLogAsync(ClickLog clickLog)
+    private readonly AppDbContext _context;
+
+    public ClickLogRepository(AppDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
+    }
+    public async Task<ClickLog> AddClickLogAsync(ClickLog clickLog)
+    {
+        _context.ClickLogs.Add(clickLog);
+        await _context.SaveChangesAsync();
+        return clickLog;
     }
 
-    public Task DeleteClickLogAsync(long id)
+    public async Task DeleteClickLogAsync(long id)
     {
-        throw new NotImplementedException();
+        ClickLog? clickLog = await _context.ClickLogs.FindAsync(id);
+        if (clickLog != null)
+        {
+            _context.ClickLogs.Remove(clickLog);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task<IEnumerable<ClickLog>> GetAllClickLogAsync()
+    public async Task<IEnumerable<ClickLog>> GetAllClickLogAsync()
     {
-        throw new NotImplementedException();
+        return await _context.ClickLogs.ToListAsync();
     }
 
-    public Task<ClickLog?> GetClickLogByIdAsync()
+    public async Task<ClickLog?> GetClickLogByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        return await _context.ClickLogs.FirstOrDefaultAsync(cl => cl.Id == id);
     }
 
-    public Task<ClickLog> UpdateClickLogAsync(ClickLog clickLog)
+    public async Task<ClickLog> UpdateClickLogAsync(ClickLog clickLog)
     {
-        throw new NotImplementedException();
+        _context.Entry(clickLog).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+        return clickLog;
     }
 }
