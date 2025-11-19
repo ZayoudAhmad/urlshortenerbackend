@@ -1,11 +1,19 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace urlshortenerbackend.Models;
 
 public class ClickEvent
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
 
-    public string Alias { get; set; } = default!;
+    [Required]
+    [MaxLength(6)]
+    public required string Alias { get; set; }
 
+    [Required]
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
     public string? Country { get; set; }
