@@ -6,8 +6,9 @@ namespace urlshortenerbackend.Models;
 public class ShortUrl
 {
     [BsonId]
-    public string Alias { get; set; } = default!;
+
+    public required string Alias { get; set; } 
 
     [BsonElement("destinationUrl")]
-    public string DestinationUrl { get; set; } = default!;
+    public required  string DestinationUrl { get; set; } 
 }
