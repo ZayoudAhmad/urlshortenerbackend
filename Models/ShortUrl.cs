@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace urlshortenerbackend.Models;
@@ -6,9 +7,11 @@ namespace urlshortenerbackend.Models;
 public class ShortUrl
 {
     [BsonId]
+    public required long Id { get; set; }
 
-    public required string Alias { get; set; } 
+    [BsonElement("alias")]
+    public required string Alias { get; set; }
 
     [BsonElement("destinationUrl")]
-    public required  string DestinationUrl { get; set; } 
+    public required string DestinationUrl { get; set; }
 }
