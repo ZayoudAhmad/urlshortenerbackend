@@ -1,14 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using urlshortenerbackend.Data;
+using urlshortenerbackend.Repositories;
+using urlshortenerbackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-    
+
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
+
+builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
+
+builder.Services.AddSingleton<IShortUrlRepository, ShortUrlRepository>();
+
+builder.Services.AddSingleton<ISequentialIdGenerator, SequentialIdGenerator>();
 
 builder.Services.AddControllers();
 
