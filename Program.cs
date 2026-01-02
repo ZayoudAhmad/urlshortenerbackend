@@ -1,5 +1,9 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using urlshortenerbackend.Data;
+using urlshortenerbackend.Models;
 using urlshortenerbackend.Repositories;
 using urlshortenerbackend.Services;
 
@@ -12,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
 
 builder.Services.AddSingleton<IShortUrlRepository, ShortUrlRepository>();
@@ -21,6 +27,21 @@ builder.Services.AddSingleton<ISequentialIdGenerator, SequentialIdGenerator>();
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["AppSettings:Audience"],
+        ValidateLifetime = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!)),
+        ValidateIssuerSigningKey = true
+    };
+});
+
 
 var app = builder.Build();
 
