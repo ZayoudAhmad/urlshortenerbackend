@@ -2,8 +2,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using urlshortenerbackend.Data;
-using urlshortenerbackend.Models;
 using urlshortenerbackend.Repositories;
 using urlshortenerbackend.Services;
 
@@ -26,8 +26,6 @@ builder.Services.AddSingleton<ISequentialIdGenerator, SequentialIdGenerator>();
 
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApi();
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -42,6 +40,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
@@ -49,10 +48,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI V1");
-    });
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
